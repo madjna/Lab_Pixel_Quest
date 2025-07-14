@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -24,6 +25,21 @@ public class NewBehaviourScript : MonoBehaviour
         private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Hit");
+
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Death":
+                {
+                    string thislevel = SceneManager.GetActiveScene().name;
+                    SceneManager.LoadScene(thislevel);
+                    break;
+                }
+        }
     }
 
 
