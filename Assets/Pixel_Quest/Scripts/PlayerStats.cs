@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour {
+    public Transform respawnPoint;
     public string nextLevel = "GeoLevel_2";
     public int coinCount = 0;
-    public int Health = 3;
+    public int _health = 3;
 
 
     // Update is called once per frame
@@ -15,18 +16,30 @@ public class PlayerStats : MonoBehaviour {
         switch (other.tag)
         {
             case "Health":
-            {
-                Health++;
-                Destroy (other.gameObject);
-                break;
-
-            }
+                {
+                    if (_health < 3)
+                    {
+                        _health++;
+                        Destroy(other.gameObject);                   
+                    }
+                    break;
+                }
+                    
             case "Death":
             {
-                string thisLevel = SceneManager.GetActiveScene().name;
-                SceneManager.LoadScene(thisLevel);
-                break;
-            }
+                    _health--;
+                    if (_health <= 0)
+                    {
+                        string thisLevel = SceneManager.GetActiveScene().name;
+                        SceneManager.LoadScene(thisLevel);
+                    }
+                    else
+                    {
+                        transform.position = respawnPoint.position;                        
+                    }
+                    break;
+                }
+
             case "Finish":
             {
                 SceneManager.LoadScene(nextLevel);
