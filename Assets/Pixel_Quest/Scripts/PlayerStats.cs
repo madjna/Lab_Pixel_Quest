@@ -51,6 +51,11 @@ public class PlayerStats : MonoBehaviour {
                     Destroy(other.gameObject);
                     break;
                 }
+            case "Respawn":
+                {
+                    respawnPoint.position = other.transform.Find("Point").position;
+                    break;
+                }
         }
     } 
 }
