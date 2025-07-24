@@ -8,7 +8,14 @@ public class PlayerStats : MonoBehaviour {
     public string nextLevel = "GeoLevel_2";
     public int coinCount = 0;
     public int _health = 3;
+    public int _maxHealth = 3;
+    private PlayerUIContoller _playerUIContoller;
 
+    private void Start()
+    {
+       _playerUIContoller = GetComponent<PlayerUIContoller>();
+        _playerUIContoller.UpdateHealth(_health,_maxHealth);
+    }
 
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D other)
@@ -20,6 +27,7 @@ public class PlayerStats : MonoBehaviour {
                     if (_health < 3)
                     {
                         _health++;
+                        _playerUIContoller.UpdateHealth(_health, _maxHealth);
                         Destroy(other.gameObject);                   
                     }
                     break;
@@ -28,6 +36,7 @@ public class PlayerStats : MonoBehaviour {
             case "Death":
             {
                     _health--;
+                    _playerUIContoller.UpdateHealth(_health, _maxHealth);
                     if (_health <= 0)
                     {
                         string thisLevel = SceneManager.GetActiveScene().name;
