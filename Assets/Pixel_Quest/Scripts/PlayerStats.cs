@@ -10,11 +10,15 @@ public class PlayerStats : MonoBehaviour {
     public int _health = 3;
     public int _maxHealth = 3;
     private PlayerUIContoller _playerUIContoller;
+    public int CoinsInLevel = 0;
 
     private void Start()
     {
        _playerUIContoller = GetComponent<PlayerUIContoller>();
-        _playerUIContoller.UpdateHealth(_health,_maxHealth);
+       _playerUIContoller.StartUI();
+        _playerUIContoller.UpdateHealth(_health, _maxHealth);
+        CoinsInLevel = GameObject.Find("Coins").transform.childCount;
+        _playerUIContoller.UpdatText(coinCount + "/" + CoinsInLevel);
     }
 
     // Update is called once per frame
@@ -57,6 +61,7 @@ public class PlayerStats : MonoBehaviour {
             case "Coin":
                 {
                     coinCount++;
+                    _playerUIContoller.UpdatText(coinCount + "/" + CoinsInLevel);
                     Destroy(other.gameObject);
                     break;
                 }
